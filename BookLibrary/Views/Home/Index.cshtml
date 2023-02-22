@@ -3,11 +3,14 @@
     ViewData["Title"] = "Home Page";
 }
 
-@foreach(var book in Model){
-    <div>
-        <h1>Name = @book.Name</h1>
-        <p>Description = @book.Description</p>
-        <p>Author Name= @book.Author?.Name</p>
-        <p>Category = @book.category?.ToString()</p>
-    </div>
-}
+<div class="book-container">
+    @foreach (var book in Model)
+    {
+        <div class="movie">
+            <h1>Name = @book.Name</h1>
+            <p>Description = @book.Description</p>
+            <p>Author Name= @book.Author?.Name</p>
+            <p>Category = @book.category?.ToString()</p>
+        </div>
+    }
+</div>

@@ -1,4 +1,5 @@
 ﻿using BookLibrary.Models;
+using BookLibrary.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -20,9 +21,10 @@ namespace BookLibrary.Controllers
             return View(books);
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> Create(Book book)
         {
-            return View();
+            var bookViewModel = new BookViewModel();
+            return View(bookViewModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

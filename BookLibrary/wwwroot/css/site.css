@@ -16,3 +16,25 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.book-container {
+    display:flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 2rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+}
+
+.form-group 
+
+    

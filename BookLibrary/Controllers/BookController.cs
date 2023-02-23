@@ -38,6 +38,35 @@ namespace BookLibrary.Controllers {
             return RedirectToAction("Index", "Home", new { area = "" });
         }
 
+
+        public async Task<IActionResult> Edit(int id) {
+            Book book = await _bookRepository.GetBook(id);
+            var bookViewModel = new BookViewModel() { 
+                BookName = book.Name,
+                Description = book.Description,
+                AuthorName = book.Author.Name,
+                CategoryName = book.category
+            };
+            return View(bookViewModel);
+            }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(BookViewModel bookViewModel) {
+            
+            if (!ModelState.IsValid) {
+                return View(bookViewModel);
+            }
+
+            var book = new Book() {
+                Name = bookViewModel.BookName,
+                Description = bookViewModel.Description,
+                Author = new Author() { Name = bookViewModel.AuthorName },
+                category = bookViewModel.CategoryName
+            };
+            _bookRepository.UpdateBook(book);
+            await _bookRepository.SaveChangesAsync();
+            return RedirectToAction("Index", "Home", new { area = ""});
+        }
         //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         //public IActionResult Error() {
         //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

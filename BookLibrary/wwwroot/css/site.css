@@ -52,4 +52,23 @@ form {
         justify-content:space-between;
     }
 
+.btn-group {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn-group a {
+    text-decoration: none;
+    padding: .5rem 1rem;
+    border: 1px solid rgba(0,0,0,30%);
+
+}
+
+.btn-group .edit-btn {
+    color: darkgreen;
+}
+
+.btn-group .delete-btn {
+    color: red;
+} 
     

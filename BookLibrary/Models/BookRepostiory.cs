@@ -18,7 +18,7 @@ namespace BookLibrary.Models
 
         public async Task<Book?> GetBook(int bookId)
         {
-            return await _context.Books.FirstOrDefaultAsync(book => book.Id == bookId);
+            return await _context.Books.Include(book => book.Author).FirstOrDefaultAsync(book => book.Id == bookId);
         }
 
         public void AddBook(Book book)

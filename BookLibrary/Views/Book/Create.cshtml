@@ -1,7 +1,7 @@
 ﻿@model BookViewModel
 
 <h2>Create book</h2>
-<form method="post" asp-action="Create" asp-controller="Home">
+<form method="post" asp-action="Create" asp-controller="Book">
     <div class="form-group">
         <label class="text-muted" asp-for="BookName"></label>
         <input type="text" class="form-controller" asp-for="BookName" maxlength="250"/>
@@ -24,6 +24,6 @@
         </select>
         <span asp-validation-for="CategoryName" style="color:red"></span>
     </div>
-    <buton type="submit" class="submit-btn">Submit</buton>
+    <button type="submit" class="submit-btn">Submit</button>
     <a asp-action="Index" asp-asp-controller="Home" class="cancel-btn">Cancel</a>
 </form>

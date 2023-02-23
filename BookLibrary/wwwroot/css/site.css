@@ -18,10 +18,9 @@ body {
 }
 
 .book-container {
-    display:flex;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
 form {
@@ -35,6 +34,22 @@ form {
     max-width: 400px;
 }
 
-.form-group 
+.book-container .movie {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.book-container .movie .image-content img {
+    max-width: 200px;
+    border: .2rem solid Black;
+    box-shadow: rgba(0,0,0,70%) 5px 5px;
+}
+
+    .book-container .movie .text-content {
+        display:flex;
+        flex-direction: column;
+        justify-content:space-between;
+    }
 
     

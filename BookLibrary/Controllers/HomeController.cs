@@ -21,11 +21,7 @@ namespace BookLibrary.Controllers
             return View(books);
         }
 
-        public async Task<IActionResult> Create(Book book)
-        {
-            var bookViewModel = new BookViewModel();
-            return View(bookViewModel);
-        }
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

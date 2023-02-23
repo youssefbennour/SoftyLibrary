@@ -7,10 +7,20 @@
     @foreach (var book in Model)
     {
         <div class="movie">
-            <h1>Name = @book.Name</h1>
-            <p>Description = @book.Description</p>
-            <p>Author Name= @book.Author?.Name</p>
-            <p>Category = @book.category?.ToString()</p>
+            <div class="image-content">
+                <img src="~/atomic_habits.jpg" alt="temporary-photo"/>
+            </div>     
+            <div class="text-content">
+                <div class="book-title">
+                    <h1>@book.Name</h1>
+                </div>
+                <div class="book-details">
+                    <p>@book.Description</p>
+                    <p>@book.Author?.Name</p>
+                    <p>@book.category?.ToString()</p>
+                </div>
+                <div class="btn-group"></div>
+            </div>
         </div>
     }
 </div>

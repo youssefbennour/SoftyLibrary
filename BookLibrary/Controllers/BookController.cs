@@ -13,7 +13,10 @@ namespace BookLibrary.Controllers {
         public IActionResult Index() {
             return View();
         }
-
+        public IActionResult Cancel() 
+        {
+            return RedirectToAction("Index", "Home");    
+        }
 
         public IActionResult Create() {
             return View();    
@@ -28,7 +31,8 @@ namespace BookLibrary.Controllers {
             Book newBook = new Book() {
                 Name = bookViewModel.BookName,
                 Description = bookViewModel.Description,
-                Author = new Author() {
+                Author = new Author() 
+                {
                     Name = bookViewModel.AuthorName,
                 },
                 category = bookViewModel.CategoryName,
@@ -39,8 +43,11 @@ namespace BookLibrary.Controllers {
         }
 
 
-        public async Task<IActionResult> Edit(int id) {
-            Book book = await _bookRepository.GetBook(id);
+        public async Task<IActionResult> Edit(int? id) {
+            Book? book = await _bookRepository.GetBook(id);
+
+            if (book == null) return View("Index", "Home");
+
             var bookViewModel = new BookViewModel() { 
                 BookName = book.Name,
                 Description = book.Description,
@@ -48,28 +55,33 @@ namespace BookLibrary.Controllers {
                 CategoryName = book.category
             };
             return View(bookViewModel);
-            }
+        }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(BookViewModel bookViewModel) {
+        public async Task<IActionResult> Edit(int id, BookViewModel bookViewModel) {
             
             if (!ModelState.IsValid) {
                 return View(bookViewModel);
             }
 
             var book = new Book() {
+                Id = id,
                 Name = bookViewModel.BookName,
                 Description = bookViewModel.Description,
                 Author = new Author() { Name = bookViewModel.AuthorName },
                 category = bookViewModel.CategoryName
             };
+
             _bookRepository.UpdateBook(book);
             await _bookRepository.SaveChangesAsync();
             return RedirectToAction("Index", "Home", new { area = ""});
         }
-        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        //public IActionResult Error() {
-        //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        //}
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _bookRepository.RemoveBook(id);
+            await _bookRepository.SaveChangesAsync();
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

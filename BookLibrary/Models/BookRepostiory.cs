@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata.Ecma335;
 
 namespace BookLibrary.Models
 {
@@ -16,7 +17,7 @@ namespace BookLibrary.Models
             return list;
         }
 
-        public async Task<Book?> GetBook(int bookId)
+        public async Task<Book?> GetBook(int? bookId)
         {
             return await _context.Books.Include(book => book.Author).FirstOrDefaultAsync(book => book.Id == bookId);
         }
@@ -28,12 +29,17 @@ namespace BookLibrary.Models
 
         public void UpdateBook(Book book)
         {
-            _context.Update(book);
+            _context.Books.Update(book);
         }
 
-        public void RemoveBook(int bookId)
+        public async Task RemoveBook(int bookId)
         {
-            _context.Remove(GetBook(bookId));
+            Book? bookToRemove = await GetBook(bookId);
+            if(bookToRemove== null)
+            {
+                return;
+            }
+            _context.Books.Remove(bookToRemove);
         }
         public async Task<bool> SaveChangesAsync()
         {

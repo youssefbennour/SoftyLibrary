@@ -46,11 +46,11 @@ form {
     box-shadow: rgba(0,0,0,70%) 5px 5px;
 }
 
-    .book-container .movie .text-content {
-        display:flex;
-        flex-direction: column;
-        justify-content:space-between;
-    }
+.book-container .movie .text-content {
+    display:flex;
+    flex-direction: column;
+    justify-content:space-between;
+}
 
 .btn-group {
     display: flex;
@@ -71,4 +71,20 @@ form {
 .btn-group .delete-btn {
     color: red;
 } 
+
+
+.btn-group .cancel-btn{
+    color: #FFF;
+    background: red;
+}
+.submit-btn{
+    width:fit-content;
+    border: 1px solid rgba(0,0,0,30%);
+    background: green;
+    color: #FFF;
+}
+.submit-form{
+    display: flex;
+    gap:1rem;
+}
     

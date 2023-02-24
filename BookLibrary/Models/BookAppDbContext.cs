@@ -6,11 +6,14 @@ namespace BookLibrary.Models
     {
         public BookAppDbContext(DbContextOptions<BookAppDbContext> options) : base(options)
         {
+            
         }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+        }
+
         public DbSet<Book> Books { get; set;}
         public DbSet<Author> Authors { get; set;}
     }

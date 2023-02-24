@@ -20,8 +20,8 @@
                     <p>@book.category?.ToString()</p>
                 </div>
                 <div class="btn-group">
-                    <a asp-action="Edit" asp-controller="Book" asp-route-id=@book.Id class="edit-btn">Edit</a>
-                    <a asp-action="Delete" asp-controller="Book" class="delete-btn">Delete</a>
+                    <a asp-action="Edit" asp-controller="Book" asp-route-id="@book.Id" class="edit-btn">Edit</a>
+                    <a asp-action="Delete" asp-controller="Book" asp-route-id="@book.Id" class="delete-btn">Delete</a>
                 </div>
             </div>
         </div>

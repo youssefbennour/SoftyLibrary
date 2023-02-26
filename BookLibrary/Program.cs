@@ -1,3 +1,4 @@
+using BookLibrary.Data.FileManager;
 using BookLibrary.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,7 +18,7 @@ namespace BookLibrary
                     builder.Configuration["ConnectionStrings:BookAppConnectionString"]);
             });
             builder.Services.AddScoped<IBookRepository, BookRepostiory>();
-
+            builder.Services.AddTransient<IFileManager, FileManager>();
             var app = builder.Build();
             if (args.Length == 1 && args[0].ToLower() == "seeddata")
             {

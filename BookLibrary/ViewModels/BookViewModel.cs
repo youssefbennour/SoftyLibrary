@@ -14,5 +14,8 @@ namespace BookLibrary.ViewModels
         [Required]
         [DisplayName("Category")]
         public Category? CategoryName { get; set; }
+        [Required]
+        
+        public IFormFile Image{get;set;} = null!;
     }
 }

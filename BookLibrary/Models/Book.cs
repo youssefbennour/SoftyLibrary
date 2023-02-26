@@ -12,6 +12,7 @@ namespace BookLibrary.Models
         public string Description { get; set; } = string.Empty;
         public int AuthorId { get; set; }
         public virtual Author Author { get; set; } = null!;
+        public string Image{get;set;} = string.Empty;
         public Category? category { get; set; }
     }
 }

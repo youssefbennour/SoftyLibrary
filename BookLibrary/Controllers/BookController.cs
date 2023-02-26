@@ -1,4 +1,5 @@
-﻿using BookLibrary.Models;
+﻿using BookLibrary.Data.FileManager;
+using BookLibrary.Models;
 using BookLibrary.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -7,8 +8,10 @@ namespace BookLibrary.Controllers {
     public class BookController : Controller {
 
         private readonly IBookRepository _bookRepository;
-        public BookController(ILogger<HomeController> logger, IBookRepository bookRepository) {
+        private readonly IFileManager _fileManager;
+        public BookController(ILogger<HomeController> logger, IBookRepository bookRepository, IFileManager fileManager) {
             _bookRepository = bookRepository;
+            _fileManager = fileManager;
         }
         public IActionResult Index() {
             return View();
@@ -31,11 +34,12 @@ namespace BookLibrary.Controllers {
             Book newBook = new Book() {
                 Name = bookViewModel.BookName,
                 Description = bookViewModel.Description,
-                Author = new Author() 
+                Author = new Author()   
                 {
                     Name = bookViewModel.AuthorName,
                 },
                 category = bookViewModel.CategoryName,
+                Image = await _fileManager.SaveImage(bookViewModel.Image),
             };
             _bookRepository.AddBook(newBook);
             await _bookRepository.SaveChangesAsync();
@@ -46,13 +50,13 @@ namespace BookLibrary.Controllers {
         public async Task<IActionResult> Edit(int? id) {
             Book? book = await _bookRepository.GetBook(id);
 
-            if (book == null) return View("Index", "Home");
+            if (book == null) return View(new BookViewModel());
 
-            var bookViewModel = new BookViewModel() { 
+            var bookViewModel = new BookViewModel() {
                 BookName = book.Name,
                 Description = book.Description,
                 AuthorName = book.Author.Name,
-                CategoryName = book.category
+                CategoryName = book.category,
             };
             return View(bookViewModel);
         }
@@ -63,16 +67,31 @@ namespace BookLibrary.Controllers {
             if (!ModelState.IsValid) {
                 return View(bookViewModel);
             }
+            if (_bookRepository.GetBook(id) == null)
+            {
+                _bookRepository.AddBook(new Book
+                {
+                    Name = bookViewModel.BookName,
+                    Description = bookViewModel.Description,
+                    Author = new Author() { Name = bookViewModel.AuthorName },
+                    category = bookViewModel.CategoryName,
+                    Image = await _fileManager.SaveImage(bookViewModel.Image),
+                });
+            }
+            else
+            {
+                var book = new Book()
+                {
+                    Id = id,
+                    Name = bookViewModel.BookName,
+                    Description = bookViewModel.Description,
+                    Author = new Author() { Name = bookViewModel.AuthorName },
+                    category = bookViewModel.CategoryName,
+                    Image = await _fileManager.SaveImage(bookViewModel.Image),
+                };
 
-            var book = new Book() {
-                Id = id,
-                Name = bookViewModel.BookName,
-                Description = bookViewModel.Description,
-                Author = new Author() { Name = bookViewModel.AuthorName },
-                category = bookViewModel.CategoryName
-            };
-
-            _bookRepository.UpdateBook(book);
+                _bookRepository.UpdateBook(book);
+            }
             await _bookRepository.SaveChangesAsync();
             return RedirectToAction("Index", "Home", new { area = ""});
         }

@@ -41,7 +41,7 @@ form {
 }
 
 .book-container .movie .image-content img {
-    max-width: 200px;
+    width: 100%;
     border: .2rem solid Black;
     box-shadow: rgba(0,0,0,70%) 5px 5px;
 }
@@ -87,4 +87,8 @@ form {
     display: flex;
     gap:1rem;
 }
-    
+
+.image-content {
+    max-width:200px; 
+    width: 100%;
+}

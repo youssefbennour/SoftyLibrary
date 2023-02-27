@@ -8,19 +8,20 @@ namespace BookLibrary.Controllers {
     public class BookController : Controller {
 
         private readonly IBookRepository _bookRepository;
+        private readonly IAuthorRepository _authorRepository;
         private readonly IFileManager _fileManager;
-        public BookController(ILogger<HomeController> logger, IBookRepository bookRepository, IFileManager fileManager) {
+        public BookController(ILogger<HomeController> logger, 
+            IBookRepository bookRepository,
+            IFileManager fileManager,
+            IAuthorRepository authorRepository) {
             _bookRepository = bookRepository;
             _fileManager = fileManager;
+            _authorRepository = authorRepository;
         }
         public IActionResult Index() {
             return View();
         }
-        public IActionResult Cancel() 
-        {
-            return RedirectToAction("Index", "Home");    
-        }
-
+        
         public IActionResult Create() {
             return View();    
         }
@@ -46,7 +47,7 @@ namespace BookLibrary.Controllers {
             return RedirectToAction("Index", "Home", new { area = "" });
         }
 
-
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id) {
             Book? book = await _bookRepository.GetBook(id);
 
@@ -67,6 +68,8 @@ namespace BookLibrary.Controllers {
             if (!ModelState.IsValid) {
                 return View(bookViewModel);
             }
+            int? authorId = await _authorRepository.GetAuthorByBookAsync(bookViewModel.AuthorName, bookViewModel.BookName);
+            if (authorId == null) return View(bookViewModel);
             if (_bookRepository.GetBook(id) == null)
             {
                 _bookRepository.AddBook(new Book
@@ -85,11 +88,11 @@ namespace BookLibrary.Controllers {
                     Id = id,
                     Name = bookViewModel.BookName,
                     Description = bookViewModel.Description,
-                    Author = new Author() { Name = bookViewModel.AuthorName },
                     category = bookViewModel.CategoryName,
+                    AuthorId = (int)authorId,
                     Image = await _fileManager.SaveImage(bookViewModel.Image),
                 };
-
+                
                 _bookRepository.UpdateBook(book);
             }
             await _bookRepository.SaveChangesAsync();
@@ -102,5 +105,11 @@ namespace BookLibrary.Controllers {
             await _bookRepository.SaveChangesAsync();
             return RedirectToAction("Index", "Home");
         }
+
+        public IActionResult Cancel()
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }

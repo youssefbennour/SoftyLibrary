@@ -1,10 +1,10 @@
 ﻿@model BookViewModel
 
-<h2>Edit book</h2>
-<form class="submit-form" method="post" asp-action="Edit" asp-controller="Book" enctype="multipart/form-data">
+<h2>Add book</h2>
+<form method="post" asp-action="Add" asp-controller="Home">
     <div class="form-group">
         <label class="text-muted" asp-for="BookName"></label>
-        <input type="text" class="form-controller" asp-for="BookName" maxlength="250"/>
+        <input type="text" class="form-controller" asp-for="BookName" maxlength="250" />
         <span asp-validation-for="BookName" style="color:red"></span>
     </div>
     <div class="form-group">
@@ -12,11 +12,11 @@
         <textarea type="text" class="form-controller" asp-for="Description"></textarea>
         <span asp-validation-for="Description" style="color:red"></span>
     </div>
-    <div class="form-group"> 
+    <div class="form-group">
         <label class="text-muted" asp-for="AuthorName"></label>
         <input type="text" class="form-controller" asp-for="AuthorName" />
         <span asp-validation-for="AuthorName" style="color:red"></span>
-    </div>  
+    </div>
     <div class="form-group">
         <label class="text-muted" asp-for="CategoryName"></label>
         <select asp-for="CategoryName" asp-items="Html.GetEnumSelectList<Category>()">
@@ -24,14 +24,8 @@
         </select>
         <span asp-validation-for="CategoryName" style="color:red"></span>
     </div>
-    <div class="form-group">
-        <label class="text-muted" asp-for="Image"></label>
-        <input asp-for="Image" />
-        <span asp-validation-for="Image" style="color:red"></span>
-    </div>
     <div class="btn-group">
-        <button type="submit" class="submit-btn">Update</button>
-        <a asp-controller="Book"  asp-action="Cancel" class="cancel-btn">Cancel</a>
+        <button type="submit" class="submit-btn" asp-controller="Home" asp-action="Add">Submit</button>
+        <a asp-action="Index" asp-controller="Home" class="cancel-btn">Cancel</a>
     </div>
-
 </form>

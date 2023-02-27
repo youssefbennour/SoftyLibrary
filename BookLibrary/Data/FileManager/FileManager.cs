@@ -8,7 +8,7 @@ namespace BookLibrary.Data.FileManager
 
         public FileManager(IConfiguration config)
         {
-            _imagePath = config["Path:Images"];
+            _imagePath = config["Path:Images"]!;
         }   
 
         public async Task<string> SaveImage(IFormFile image)

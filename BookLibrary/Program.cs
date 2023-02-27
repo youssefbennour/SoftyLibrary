@@ -17,7 +17,9 @@ namespace BookLibrary
                 options.UseSqlServer(
                     builder.Configuration["ConnectionStrings:BookAppConnectionString"]);
             });
+
             builder.Services.AddScoped<IBookRepository, BookRepostiory>();
+            builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
             builder.Services.AddTransient<IFileManager, FileManager>();
             var app = builder.Build();
             if (args.Length == 1 && args[0].ToLower() == "seeddata")

@@ -17,7 +17,7 @@ namespace BookLibrary.Models
 
         public async Task<int> GetAuthorByBookAsync(string authorName, string bookName)
         {
-            var book =  await _context.Books.Include(book => book.Author).Where(book => book.Author.Name == authorName).AsNoTracking().FirstOrDefaultAsync();
+            var book =  await _context.Books.Include(book => book.Author).Where(book => book.Author.Name == authorName).FirstOrDefaultAsync();
             if (book == null) return -1;
             return book.Author.Id;
         }

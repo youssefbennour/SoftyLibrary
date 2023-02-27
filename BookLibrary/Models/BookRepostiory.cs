@@ -10,11 +10,12 @@ namespace BookLibrary.Models
 
         public BookRepostiory(BookAppDbContext context) {
             _context = context;
+            _context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
         public async Task<IEnumerable<Book>> GetAll()
         {
-            var list = await _context.Books.Include(book => book.Author).ToListAsync();
-            return list;
+            return await _context.Books.Include(book => book.Author).ToListAsync();
+            
         }
 
         public async Task<Book?> GetBook(int? bookId)
